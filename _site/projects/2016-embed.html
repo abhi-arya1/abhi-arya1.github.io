@@ -5,7 +5,7 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>Abhigyan Arya | Item Cold-start Recommendations</title>
+  <title>Abhigyan Arya | Representations from Random Walk Diffusions</title>
   <meta name="description" content="Abhigyan Arya - Portfolio">
   <meta name="author" content="Abhigyan Arya">
 
@@ -100,19 +100,19 @@
 
   
     <div class="title-subtitle">
-      <h3>Item Cold-start Recommendations</h3>
-      <h5>Learning Local Collective Embeddings</h5>
+      <h3>Representations from Random Walk Diffusions</h3>
+      <h5>Understanding the link between random-walk similarities and embeddings.</h5>
     </div>
   
 
-  <p>Recommender systems suggest to users items that they might like (e.g., news articles, songs, movies) and, in doing so, they help users deal with information overload and enjoy a personalized experience. One of the main problems of these systems is the item cold-start, i.e., when a new item is introduced in the system and no past information is available, then no effective recommendations can be produced. The item cold-start is a very common problem in practice: modern online platforms have hundreds of new items published every day. To address this problem, we propose to learn <em>Local Collective Embeddings</em>: a matrix factorization that exploits items’ properties and past user preferences while enforcing the manifold structure exhibited by the collective embeddings. We present a learning algorithm based on multiplicative update rules that are efficient and easy to implement. The experimental results on two item cold-start use cases: news recommendation and email recipient recommendation, demonstrate the effectiveness of this approach and show that it significantly outperforms six state-of-the-art methods for item cold-start.</p>
+  <p><img style="width: 40%; float: left; border: 1px solid black; margin-top: 10px; margin-right: 10px;" src="/assets/projects/2016-embed.png" />
+<strong>Overview:</strong> 
+Structured data such as sequences and networks pose substantial difficulty for traditional statistical theory which has focused on data drawn independently from a vector space. A popular and empirically effective technique for dealing with such data is to map elements of the data to a vector space and to operate over the embedding as a summary statistic. Such a vector representation of discrete objects is known as a `continuous representation’.
+Continuous space models of words, objects, and signals have become ubiquitous tools for learning rich representations of data, from natural language processing to computer vision. Even in cases that the embedding is not explicit, many algorithms operate over similarity measures which implicitly embed the original dataset. In this line of work, we attempt to understand the intuition behind continuous representations. Can we construct a general theory of continuous representations? Are there general principles for semantically meaningful representations?</p>
 
-<p><strong>More details: <a href="/assets/publications/2014_item_cold_start/paper.pdf">paper</a>, <a href="/assets/publications/2014_item_cold_start/slides.pdf">slides</a>.</strong></p>
+<p>In order to answer these questions, we develop a framework for analyzing continuous representations through diffusion limits of random walks. We show that measurable quantities of discrete random walks with a latent metric structure have closed form diffusion limits. These diffusion limits allow us to approximate attributes of the discrete random walk such as the stationary distribution, hitting time, or co-occurrence using closed-form expressions from diffusions. We establish limits which guarantee asymptotic consistency of such estimators, and show they work well in practice.</p>
 
-<figure class="image">
-  <img src="/assets/projects/2014_item-cold-start/main.jpg" alt="The intuition behind learning collective embeddings using matrix factorization" style="width: 100%" />
-  <figcaption><b>The intuition behind learning collective embeddings using matrix factorization</b></figcaption>
-</figure>
+<p>Using this new approach, we solve three classes of problems: first, we derive principled network algorithms which connect statistical estimation tasks such as density estimation to network algorithms such as PageRank [<a href="http://proceedings.mlr.press/v38/hashimoto15.html">Hashimoto+2015</a>][<a href="http://papers.nips.cc/paper/6009-from-random-walks-to-distances-on-unweighted-graph">Hashimoto+2016</a>]. Next, we demonstrated that continuous representations of words are a type of random walk metric estimator with close connections to manifold learning [<a href="https://transacl.org/ojs/index.php/tacl/article/view/809">Hashimoto+2016</a>]. Finally, we apply our theory to single-cell RNA seq data, and derive a way to learn time-series models without trajectories by using stochastic recurrent neural networks [<a href="http://proceedings.mlr.press/v48/hashimoto16.pdf">Hashimoto+2016</a>].</p>
 
 
 </div>

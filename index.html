@@ -6,48 +6,15 @@ title: Home
 <div class="docs-section" id="bio">
   <h4>Bio</h4>
   <p>
-    I am currently an assistant professor at the computer science department in Stanford university. 
-</p>
-  <p>
-    
-    My research uses tools from statistics to make machine learning systems more robust and trustworthy &#8212; especially in complex systems such as large language models. The goal of my research is to use robustness and worst-case performance as a lens to understand and make progress on several fundamental challenges in machine learning and natural language processing. A few topics of recent interest are,
-    
-    <dl style="PADDING-LEFT: 40px">
-    <dt><b>Long-tail behavior</b></dt> <dd>How can we ensure that a machine learning system won't fail catastrophically in the wild under changing conditions?</dd>
-    <dt><b>Understanding</b></dt>
-    <dd>A system which <i> understands </i> how to answer questions or generate text should also do so robustly out-of-domain. </dd>
-    <dt><b>Fairness</b></dt>  <dd>Machine learning systems which rely on unreliable correlations can result in spurious and harmful predictions.</dd>
-    </dl>
+    Hi, I'm Abhi. I'm currently an Undergraduate Student at UC Irvine, studying Computer Science and Engineering. 
+    I'm interested in the intersection of machine learning, statistics, and cloud computing infrastructure, 
+    and I'm a big fan of embedded software and full stack development. 
 
-  </p>
-  <p>
-    Previously, I was a post-doc at Stanford working for <a href=https://web.stanford.edu/~jduchi/ target="_blank">John C. Duchi</a> and <a href=https://cs.stanford.edu/~pliang/ target="_blank">Percy Liang</a> on tradeoffs between the average and worst-case performance of machine learning models. Before my post-doc, I was a graduate student at MIT co-advised by <a href=https://people.csail.mit.edu/tommi/ target="_blank">Tommi Jaakkola</a> and <a href=http://cgs.csail.mit.edu/ target="_blank">David Gifford</a> and a undergraduate student at Harvard in statistics and math advised by <a href=http://www.people.fas.harvard.edu/~airoldi/ target="_blank">Edoardo Airoldi</a>.
+    If you'd like to chat, feel free to reach out on <a href="https://linkedin.com/abhiaarya">LinkedIn</a> or at abhigyaa@uci.edu!
+    
   </p>
 
 </div>
-
-
-<div class="docs-section" id="people">
-  <h4>Advisees</h4>
-
-
-      {% assign current_people = site.data.students.students | where: "category", "current" %}
-      {% for person in current_people %}
-        <div class="paper">
-          <p style="line-height: 0.5">
-            {% if person.link %}
-            <a href="{{ person.link | prepend: site.baseurl }}" target="_blank"><b>{{ person.name }}</b></a>
-            {% else %}
-            <b>{{ person.name }}</b>
-              
-              {% endif %}
-               ({{ person.time }}) <i>{{ person.place }}</i>
-          </p>
-        </div>
-      {% endfor %}
-</div>
-
-
 
 <!--
   <h4>Recent Research Areas</h4>
@@ -93,65 +60,20 @@ title: Home
 <!-- ========== PUBLICATIONS ========== -->
 
 
-<!-- old people 
-<div class="docs-section" id="people">
-  <h4>Advisees</h4>
-
+<div class="docs-section" id="experience">
+  <h4>Experience</h4>
 
   <ul class="tab-nav">
-    <li><div class="button active" data-ref="#current">Current</div></li>
-    <li><div class="button" data-ref="#former">Former</div></li>
+    <li><div class="button active" data-ref="#papers-aiml">AI/ML</div></li>
+    <li><div class="button" data-ref="#papers-embed">Embedded Software</div></li>    
+    <li><div class="button" data-ref="#papers-fsd">Full Stack Development</div></li>
+    <li><div class="button" data-ref="#papers-all">All</li>
   </ul>
 
   <div class="tab-content">
 
-    <div class="tab-pane active" id="current">
-      {% assign current_people = site.data.students.students | where: "category", "current" %}
-      {% for person in current_people %}
-        <div class="paper">
-          <p class="title"><b>{{ person.name }}</b> ({{ person.time }})</p>
-          <p><i>{{ person.place }}</i></p>
-          {% if person.current %}
-          <p> {{ person.current }} </p>
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
-
-    <div class="tab-pane" id="former">
-      {% assign former_people = site.data.students.students | where: "category", "former" %}
-      {% for person in former_people %}
-        <div class="paper">
-          <p class="title"><b>{{ person.name }}</b> ({{ person.time }})</p>
-          <p><i>{{ person.place }}</i></p>
-          {% if person.current %}
-          <p> {{ person.current }} </p>
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
-    
-  </div>
-</div>
--->
-
-<div class="docs-section" id="publications">
-  <h4>Publications</h4>
-
-  <p>Most recent publications on <a href="https://scholar.google.com/citations?user=5ygiTwsAAAAJ" target="_blank">Google Scholar</a>.</p>
-
-  <ul class="tab-nav">
-    <li><div class="button active" data-ref="#papers-sel">Selected and Recent Papers</div></li>
-    <li><div class="button" data-ref="#papers-all">All</div></li>    
-    <li><div class="button" data-ref="#papers-ML">Stats+ML</div></li>
-    <li><div class="button" data-ref="#papers-NLP">NLP</div></li>
-    <li><div class="button" data-ref="#papers-Bio">Comp Bio</div></li>
-  </ul>
-
-  <div class="tab-content">
-
-    <div class="tab-pane active" id="papers-sel">
-      {% assign papers = site.data.publications.papers | where: "selected", "y" %}
+    <div class="tab-pane" id="papers-embed">
+      {% assign papers = site.data.publications.papers | where: "embed", "y" %}
       {% for paper in papers %}
         <div class="paper">
           <p class="title"><b>{{ paper.title }}</b>
@@ -182,7 +104,7 @@ title: Home
 
     <!-- All PAPERS -->
     <div class="tab-pane" id="papers-all">
-      {% assign papers = site.data.publications.papers %}
+      {% assign papers = site.data.publications.papers | where: "all", "y" %}
       {% for paper in papers %}
         <div class="paper">
           <p class="title"><b>{{ paper.title }}</b>
@@ -213,25 +135,13 @@ title: Home
     
 
     <!-- ML PAPERS -->
-    <div class="tab-pane" id="papers-ML">
-      {% assign ml_papers = site.data.publications.papers | where: "statsml", "y" %}
+    <div class="tab-pane active" id="papers-aiml">
+      {% assign ml_papers = site.data.publications.papers | where: "aiml", "y" %}
       {% for paper in ml_papers %}
         <div class="paper">
           <p class="title"><b>{{ paper.title }}</b>
-            {% if paper.paper_pdf %}
-              <a class="button" href="{{ paper.paper_pdf | prepend: site.baseurl }}" target="_blank">PDF</a>
-            {% endif %}
-            {% if paper.slides %}
-              <a class="button" href="{{ paper.slides | prepend: site.baseurl }}" target="_blank">Slides</a>
-            {% endif %}
-            {% if paper.poster %}
-              <a class="button" href="{{ paper.poster | prepend: site.baseurl }}" target="_blank">Poster</a>
-            {% endif %}
-            {% if paper.video %}
-              <a class="button" href="{{ paper.video }}" target="_blank">Video</a>
-            {% endif %}
-            {% if paper.code %}
-              <a class="button" href="{{ paper.code }}" target="_blank">Code</a>
+            {% if paper.github %}
+              <a class="button" href="{{ paper.github }}" target="_blank">Code</a>
             {% endif %}
           </p>
           <p>{{ paper.authors }}</p>
@@ -243,9 +153,9 @@ title: Home
       {% endfor %}
     </div>
 
-    <!-- NLP PAPERS -->
-    <div class="tab-pane" id="papers-NLP">
-      {% assign nlp_papers = site.data.publications.papers | where: "nlp", "y" %}
+    <!-- EMBED PAPERS -->
+    <div class="tab-pane" id="papers-embed">
+      {% assign nlp_papers = site.data.publications.papers | where: "embed", "y" %}
       {% for paper in nlp_papers %}
         <div class="paper">
           <p class="title"><b>{{ paper.title }}</b>
@@ -270,9 +180,9 @@ title: Home
         </div>
       {% endfor %}
     </div>
-    <!-- Bio PAPERS -->
-    <div class="tab-pane" id="papers-Bio">
-      {% assign bio_papers = site.data.publications.papers | where: "bio", "y" %}
+    <!-- FSD PAPERS -->
+    <div class="tab-pane" id="papers-fsd">
+      {% assign bio_papers = site.data.publications.papers | where: "fsd", "y" %}
       {% for paper in bio_papers %}
         <div class="paper">
           <p class="title"><b>{{ paper.title }}</b>
@@ -303,16 +213,6 @@ title: Home
 
 
 
-<div class="docs-section" id="teaching">
-  <h4>Teaching</h4>
-  {% assign current_classes = site.data.classes.classes | where: "category", "current" %}
-  {% for class in current_classes %}
-  <div class="class">
-    <p class="title"><b>{{ class.name }}</b> ({{ class.time }}): <a href={{class.link}} target="_blank">{{ class.title }}</a></p>
-  </div>
-  {% endfor %}
-</div>
-
 <!--
 <div class="docs-section" id="talks">
   <h4>Talks and slides</h4>
@@ -325,32 +225,14 @@ title: Home
 </div>
 --!>
 
-<div class="docs-section" id="former">
-  <h4>Former Advisees</h4>
-
-
-      {% assign former_people = site.data.students.students | where: "category", "former" %}
-      {% for person in former_people %}
-        <div class="paper">
-          <p style="line-height: 0.5">
-            {% if person.link %}
-            <a href="{{ person.link | prepend: site.baseurl }}" target="_blank"><b>{{ person.name }}</b></a>
-            {% else %}
-            <b>{{ person.name }}</b>
-              
-              {% endif %}
-               ({{ person.time }}) <i>{{ person.place }}</i>
-          </p>
-        </div>
-      {% endfor %}
-</div>
-
 
 
 
 <!-- ========== RESUME ========== -->
 <div class="docs-section" id="resume">
   <h4>Resume</h4>
+
+  <p>View my PDF resume <a href="https://drive.google.com/file/d/1sM6VJEPz_oar718KaT88HC0niAlitGLl/view?usp=sharing" target="_blank" >here</a>.</p>
 
   <!-- The Timeline -->
   <ul class="timeline">
@@ -372,11 +254,3 @@ title: Home
   </ul>
 </div>
 
-
-  <div class="docs-section" id="ack">
-  <h4>Acknowledgement</h4>
-  <p>
-    This website uses the website design and template by <a href="https://github.com/msaveski/www_personal">Martin Saveski</a>
-  </p>
-
-</div>
