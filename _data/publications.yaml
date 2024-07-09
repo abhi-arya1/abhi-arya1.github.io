@@ -1,10 +1,72 @@
 papers:
   - title: "Tuna: Simplified Fine Tuning"
     github: "https://github.com/abhi-arya1/tuna"
-    venue: "Python, Cloud Compute, Dataset Autogeneration, etc."
+    description: "Developed localized platform for rapid AI development with automatic dataset generation and cloud compute."
+    keywords: "Python, AWS, GCP, RAG, Cloud Computing"
     aiml: y
     all: y
     embed: n
     fsd: n
 
-  - title: ""
+  - title: "Opennote: Redefining Education with AI"
+    sitex: "https://opennote.me"
+    description: "Developed AI-based automated text-to-animation pipeline, aggregating files and natural language in Python to enhance education with animated lectures"
+    keywords: "1st Place, LAHacks 2024 (UCLA) Digital Experience Track"
+    aiml: y
+    all: y
+    embed: n
+    fsd: y
+
+  - title: "ZotConnect: Connecting Professors and Students"
+    github: "https://github.com/abhi-arya1/zotconnect"
+    description: "Developed a platform for students to connect with professors and peers for research, using AI-based search and resume reviews for curated applications"
+    keywords: "1st Place/Best Overall, IrvineHacks 2024 (UCI)"
+    aiml: n
+    all: y
+    embed: n
+    fsd: y
+
+  - title: "Coauthor: AI-based Research Collaboration"
+    github: "https://github.com/abhi-arya1/coauthor"
+    description: "Developed a platform for researchers to collaborate on papers in real-time, using RAG AI for automated browsing and sourcing"
+    keywords: "Winner, SFHacks 2024"
+    aiml: y
+    all: y
+    fsd: y
+    embed: n
+
+  - title: "Copilot Avionics Module"
+    github: "https://github.com/abhi-arya1/copilot-avionics-module"
+    description: "Built micro flight computer for amateur rocketry, creating datalogging, control, and telemetry systems for autonomous high-powered flight"
+    keywords: "C++, Arduino, Rocketry, Avionics, Embedded Software"
+    aiml: n
+    all: y
+    fsd: n
+    embed: y
+
+  - title: "AntSat 01 Computer - Avionics Lead"
+    site: "https://projects.eng.uci.edu/projects/2023-2024/uci-cubesat"
+    description: "Led avionics team for UCI's first CubeSat, developing flight computer, power systems, and telemetry framework from scratch in embedded Linux for satellite launch"
+    keywords: "C++, Linux, CubeSat, Avionics, Embedded Software"
+    aiml: n
+    all: y
+    fsd: n
+    embed: y
+
+  - title: "Polaris: Framework for Astronaut EVAs"
+    paper: "https://www.researchgate.net/publication/381772663_Polaris_An_Assistance_System_for_Extravehicular_Activities"
+    description: "Developed an all-encompassing framework to simplify astronaut space walks and mission control systems by developing Python API and Full-Stack GUIs for real-time mission control and heads-up-displays."
+    keywords: "NASA, Spacewalks, Astronauts, Frameworks"
+    aiml: n
+    all: y
+    fsd: y
+    embed: n
+
+  - title: "Algorithmic Trading"
+    code: ""
+    description: "Developed algorithmic trading platform for high-frequency trading, using Python for real-time data and trend analysis, outputting possible trading strategies. (not used in production or for actual purchase)"
+    keywords: "Python, Trading, Finance, Quantitative Analysis, Algorithms"
+    aiml: y
+    all: y
+    fsd: n
+    embed: n
