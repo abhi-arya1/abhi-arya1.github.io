@@ -63,36 +63,16 @@ title: Home
   <h4>Experience</h4>
 
   <ul class="tab-nav">
-    <li><div class="button active" data-ref="#papers-aiml">AI/ML</div></li>
+    <li><div class="button active" data-ref="#papers-all">All</li>
+    <li><div class="button" data-ref="#papers-aiml">AI/ML</div></li>
     <li><div class="button" data-ref="#papers-embed">Embedded Software</div></li>    
     <li><div class="button" data-ref="#papers-fsd">Full Stack Development</div></li>
-    <li><div class="button" data-ref="#papers-all">All</li>
   </ul>
 
   <div class="tab-content">
 
-    <div class="tab-pane" id="papers-embed">
-      {% assign papers = site.data.publications.papers | where: "embed", "y" %}
-      {% for paper in papers %}
-        <div class="paper">
-          <p class="title"><b>{{ paper.title }}</b>
-            {% if paper.github %}
-            <a class="button" href="{{ paper.github }}" target="_blank">Code</a>
-            {% else if paper.site %}
-            <a class="button" href="{{ paper.site }}" target="_blank">Site</a>
-          {% endif %}
-          </p>
-          <p>{{ paper.description }}</p>
-          <p><i>{{ paper.keywords }}</i></p>
-           <div class="paper-buttons">
-
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-
     <!-- All PAPERS -->
-    <div class="tab-pane" id="papers-all">
+    <div class="tab-pane active" id="papers-all">
       {% assign papers = site.data.publications.papers | where: "all", "y" %}
       {% for paper in papers %}
         <div class="paper">
@@ -116,15 +96,17 @@ title: Home
     
 
     <!-- ML PAPERS -->
-    <div class="tab-pane active" id="papers-aiml">
+    <div class="tab-pane" id="papers-aiml">
       {% assign ml_papers = site.data.publications.papers | where: "aiml", "y" %}
       {% for paper in ml_papers %}
         <div class="paper">
           <p class="title"><b>{{ paper.title }}</b>
             {% if paper.github %}
-              <a class="button" href="{{ paper.github }}" target="_blank">Code</a>
-              {% else if paper.site %}
-              <a class="button" href="{{ paper.site }}" target="_blank">Site</a>
+            <a class="button" href="{{ paper.github }}" target="_blank">Code</a>
+            {% else if paper.paper %}
+            <a class="button" href="{{ paper.paper }}" target="_blank">Paper</a>
+            {% else if paper.site %}
+            <a class="button" href="{{ paper.site }}" target="_blank">Site</a>
             {% endif %}
           </p>
           <p>{{ paper.description }}</p>
@@ -144,6 +126,8 @@ title: Home
           <p class="title"><b>{{ paper.title }}</b>
             {% if paper.github %}
             <a class="button" href="{{ paper.github }}" target="_blank">Code</a>
+            {% else if paper.paper %}
+            <a class="button" href="{{ paper.paper }}" target="_blank">Paper</a>
             {% else if paper.site %}
             <a class="button" href="{{ paper.site }}" target="_blank">Site</a>
             {% endif %}
@@ -165,7 +149,7 @@ title: Home
             <a class="button" href="{{ paper.paper }}" target="_blank">Paper</a>
             {% else if paper.site %}
             <a class="button" href="{{ paper.site }}" target="_blank">Site</a>
-          {% endif %}
+            {% endif %}
           </p>
           <p>{{ paper.description }}</p>
           <p><i>{{ paper.keywords }}</i></p>
@@ -197,7 +181,7 @@ title: Home
 <div class="docs-section" id="resume">
   <h4>Resume</h4>
 
-  <p>View my PDF resume <a href="https://drive.google.com/file/d/1sM6VJEPz_oar718KaT88HC0niAlitGLl/view?usp=sharing" target="_blank" >here</a>.</p>
+  <p>View my full resume <a href="https://drive.google.com/file/d/1sM6VJEPz_oar718KaT88HC0niAlitGLl/view?usp=sharing" target="_blank" >here</a>.</p>
 
   <!-- The Timeline -->
   <ul class="timeline">
