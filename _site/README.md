@@ -1,12 +1,14 @@
 # Portfolio Site
 
-## Things to change
+<!-- ## Things to change
 
 baseurl in \_config.yml
 files in \_data
 index.hml (bio, google scholar link)
-categories (selected --> ML / NLP / Bio)
-layouts (default.html)
+categories (selected -->
+<!-- ML / NLP / Bio)
+
+layouts (default.html)  -->
 
 ## Updates guide
 

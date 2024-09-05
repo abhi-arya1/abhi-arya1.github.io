@@ -9,7 +9,7 @@ papers:
     fsd: n
 
   - title: "Opennote: Redefining Education with AI"
-    sitex: "https://opennote.me"
+    github: "https://opennote.me"
     description: "Developed AI-based automated text-to-animation pipeline, aggregating files and natural language in Python to enhance education with animated lectures"
     keywords: "1st Place, LAHacks 2024 (UCLA) Digital Experience Track"
     aiml: y
