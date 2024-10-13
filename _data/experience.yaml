@@ -1,7 +1,7 @@
 experiences:
   - place: "NASA Johnson Space Center"
     time: "Aug 2024 - Present"
-    title: "Software Engineering Intern - Intelligent Robotic Systems"
+    title: "Software Engineering Intern"
     subtitle: "Developing autonomous control software and verification/communication tools for the Gateway Space Station."
     category: "work"
 
@@ -12,8 +12,8 @@ experiences:
   #   category: "school"
 
   - place: "UCI Institute for Future Health"
-    time: "Jul 2024 - Present"
-    title: "Software Engineering Intern - Cloud Platform and AI"
+    time: "Jun 2024 - Jul 2024"
+    title: "Software Engineering Intern"
     subtitle: "Building API/AWS Platform for agentified health AI systems, integrating NLP and ML models for real-time health monitoring."
     category: "work"
 
@@ -25,7 +25,7 @@ experiences:
 
   - place: "NASA Johnson Space Center"
     time: "Nov 2023 - Jun 2024"
-    title: "Software Engineering Researcher - Extravehicular Operations"
+    title: "Software Engineering Researcher"
     subtitle: "Developed an all-encompassing framework to simplify astronaut space walks and mission control systems."
     category: "work"
 
