@@ -17,6 +17,12 @@ experiences:
     subtitle: "Building API/AWS Platform for agentified health AI systems, integrating NLP and ML models for real-time health monitoring."
     category: "work"
 
+  # - place: "Hackathons"
+  #   time: "2024"
+  #   title: 'Building... (View my <a href="https://devpost.com/abhi-arya1">DevPost</a>)'
+  #   subtitle: "Placing highly nationwide by intensely building and ideating products in 24-48 hour hackathons."
+  #   category: "school"
+
   - place: "Opennote"
     time: "Apr 2024 - Present"
     title: "Head of AI/ML"
@@ -32,7 +38,7 @@ experiences:
   - place: "University of California, Irvine (UCI)"
     time: "2023 - 2027"
     title: "B.S. Computer Science and Engineering"
-    subtitle: "GPA 3.99/4.0"
+    subtitle: "GPA 3.98/4.0"
     category: "school"
 
   - place: "UCI School of Social Sciences"

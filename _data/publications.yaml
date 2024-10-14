@@ -8,6 +8,15 @@ papers:
     embed: n
     fsd: n
 
+  - title: "Block Thing"
+    github: "https://github.com/uno-p-5/BlockThing"
+    description: "Developed a new flavor of Scratch, powered by AI, with 1-1 correspondence between blocks and code, using RAG AI for automated code generation to teach early CS education."
+    keywords: "Winner, Most Creative Product, HackMIT 2024"
+    aiml: n
+    all: y
+    fsd: y
+    embed: n
+
   - title: "Opennote: Redefining Education with AI"
     github: "https://opennote.me"
     description: "Developed AI-based automated text-to-animation pipeline, aggregating files and natural language in Python to enhance education with animated lectures"
