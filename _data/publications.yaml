@@ -1,4 +1,22 @@
 papers:
+  - title: "Codespace: Interactive Lecture Learning"
+    github: "https://github.com/abhi-arya1/codespace"
+    description: "Real-time Lecture Hall Solution for Professors to engage with Students."
+    keywords: "Learning, Edtech, Interactivity, Realtime"
+    aiml: n
+    all: y
+    embed: n
+    fsd: y
+
+  - title: "Sift: Search Everything"
+    github: "https://github.com/abhi-arya1/siftai"
+    description: "Vector Search every knowledge base you have in one place."
+    keywords: "CalHacks 2024, Rust, OAuth, SocketIO, Vector Databases"
+    aiml: y
+    all: y
+    embed: n
+    fsd: y
+
   - title: "Tuna: Simplified Fine Tuning"
     github: "https://github.com/abhi-arya1/tuna"
     description: "Developed localized platform for rapid AI development with automatic dataset generation and cloud compute."
@@ -19,8 +37,8 @@ papers:
 
   - title: "Opennote: Redefining Education with AI"
     github: "https://opennote.me"
-    description: "Developed AI-based automated text-to-animation pipeline, aggregating files and natural language in Python to enhance education with animated lectures"
-    keywords: "1st Place, LAHacks 2024 (UCLA) Digital Experience Track"
+    description: "Designed and deployed advanced multimodal and personalized systems for learning."
+    keywords: "Winner, Digital Experience Track, LAHacks 2024 (UCLA)"
     aiml: y
     all: y
     embed: n
@@ -72,7 +90,7 @@ papers:
     embed: n
 
   - title: "Algorithmic Trading"
-    code: ""
+    github: ""
     description: "Developed algorithmic trading platform for high-frequency trading, using Python for real-time data and trend analysis, outputting possible trading strategies. (not used in production or for actual purchase)"
     keywords: "Python, Trading, Finance, Quantitative Analysis, Algorithms"
     aiml: y
