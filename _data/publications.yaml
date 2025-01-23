@@ -1,6 +1,6 @@
 papers:
-  - title: "Codespace: Interactive Lecture Learning"
-    github: "https://github.com/abhi-arya1/codespace"
+  - title: "Codeshare: Interactive Lecture Learning"
+    github: "https://github.com/abhi-arya1/codeshare"
     description: "Real-time Lecture Hall Solution for Professors to engage with Students."
     keywords: "Learning, Edtech, Interactivity, Realtime"
     aiml: n
