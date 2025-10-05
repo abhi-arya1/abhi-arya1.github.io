@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Think About Your Consumption</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        cite {
+            font-style: normal;
+        }
+        cite a {
+            vertical-align: super;
+            font-size: 0.8em;
+        }
+        .references {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+        .references h2 {
+            margin-bottom: 3px;
+        }
+        .references ol {
+            padding-left: 20px;
+        }
+        .references li {
+            margin-bottom: 10px;
+            word-break: break-word;
+        }
+        .references li:target a {
+            background-color: #fff6c5;
+        }
+    </style>
+</head>
+<body>
+    <div class="links" style="margin-top: 80px;">
+        <a target="_self" href="/writing.html">← Back to Writing</a>
+    </div>
+
+    <h1>Think About Your Consumption.</h1>
+    <i>Written on October 5th, 2025, in San Francisco.</i>
+
+    <p style="margin-top: 20px;">
+        <i>This is my first time writing something of this manner, and I'm still figuring it out. I hope that as I try to be more consistent on this blog and keep things updated, that it provides a peek into how I've been able to develop my writing and explaining skills over time. That's really the whole point of this. Public exercises in being able to convey my thoughts. Anyways, on with the actual content...</i>
+        <br/><br/>
+        I'm writing this up as I just got back from a decently insightful dinner with some friends and mentors that has somewhat left me thinking. A big topic of contention throughout the night repeatedly remained what we believe as the function of AI in our lives and where it should stand, and what it can hold.
+        <br/><br/>
+        In conversation, I had mentioned that a few years back I'd met a few people who are pursuing higher education and careers in arts and arts-adjacent fields. Obviously through being in touch through social media, some of these individuals have taken a stance that's vehemently anti-AI. This makes sense. The direction that model companies are going, there is a very good chance that a lot of content we consume loses touch. This is a very topical time to be talking about this, the same week that Sora 2 has been released under a media blanket chalking it up to <cite href="https://www.vox.com/future-perfect/463596/openai-sora2-reels-videos-tiktok-chatgpt-deepfakes">AI Slop</cite>. Not to help its case, it comes right after Meta releases <cite href="https://about.fb.com/news/2025/09/introducing-vibes-ai-videos/">Vibes</cite>, it's own take on providing AI generated content for consumption.
+        <br/><br/>
+        Don't get me wrong here. Every company that is innovating in AI is doing absolutely incredible work. The fact that machines can think and respond, and agent-first systems can remember, is nothing short of a technological marvel with genuine benefits to society. Even I'm a contributor to products that utilize and innovate upon AI. But my take on things is to make sure that there's no loss of touch.
+        <br/><br/>
+        <br/><br/>
+        Don't get me wrong here. Every company that is innovating in AI is doing absolutely incredible work. The fact that machines can think and respond, and agent-first systems can remember, is nothing short of a technological marvel with genuine benefits to society. Even I'm a contributor to products that utilize and innovate upon AI. But my take on things is to make sure that there's no loss of touch.
+        <br/><br/>
+        <br/><br/>
+        Don't get me wrong here. Every company that is innovating in AI is doing absolutely incredible work. The fact that machines can think and respond, and agent-first systems can remember, is nothing short of a technological marvel with genuine benefits to society. Even I'm a contributor to products that utilize and innovate upon AI. But my take on things is to make sure that there's no loss of touch.
+        <br/><br/> <br/><br/>
+        Don't get me wrong here. Every company that is innovating in AI is doing absolutely incredible work. The fact that machines can think and respond, and agent-first systems can remember, is nothing short of a technological marvel with genuine benefits to society. Even I'm a contributor to products that utilize and innovate upon AI. But my take on things is to make sure that there's no loss of touch.
+        <br/><br/>
+        If all art, all human interaction, all media is replaced with AI, we're not entering an age of innovation, we're entering an 
+    </p>
+
+    <div class="references" id="references"></div>
+
+    <script>
+        // Citation system
+        document.addEventListener('DOMContentLoaded', function() {
+            const cites = document.querySelectorAll('cite[href]');
+            const citations = new Map();
+            let counter = 1;
+
+            // Process each citation
+            cites.forEach(cite => {
+                const url = cite.getAttribute('href');
+
+                if (!citations.has(url)) {
+                    citations.set(url, counter++);
+                }
+
+                const num = citations.get(url);
+                const link = document.createElement('a');
+                link.href = `#ref-${num}`;
+                link.className = 'project-link';
+                link.textContent = `[${num}]`;
+                cite.appendChild(link);
+            });
+
+            // Create references section if there are citations
+            if (citations.size > 0) {
+                const refsDiv = document.getElementById('references');
+                const heading = document.createElement('h2');
+                heading.textContent = 'References';
+                refsDiv.appendChild(heading);
+
+                const list = document.createElement('ol');
+                citations.forEach((num, url) => {
+                    const item = document.createElement('li');
+                    item.id = `ref-${num}`;
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.className = 'project-link';
+                    link.target = '_blank';
+                    link.textContent = url;
+                    item.appendChild(link);
+                    list.appendChild(item);
+                });
+                refsDiv.appendChild(list);
+            }
+        });
+    </script>
+</body>
+</html>
