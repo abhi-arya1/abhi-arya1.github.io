@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Really Good Search is Really Hard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <style>
+        cite {
+            font-style: normal;
+        }
+        cite a {
+            vertical-align: super;
+            font-size: 0.8em;
+        }
+        code[language] {
+            display: block;
+            white-space: pre !important;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            overflow-x: auto;
+            font-size: 0.85em;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px 20px;
+        }
+        code[class*="language-"] {
+            white-space: pre !important;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px 20px !important;
+            overflow-x: auto;
+        }
+        .references {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+        .references h2 {
+            margin-bottom: 3px;
+        }
+        .references ol {
+            padding-left: 20px;
+        }
+        .references li {
+            margin-bottom: 10px;
+            word-break: break-word;
+        }
+        .references li:target a {
+            background-color: #fff6c5;
+        }
+    </style>
+</head>
+<body>
+    <div class="links" style="margin-top: 80px;">
+        <a target="_self" href="/writing.html">← Back to Writing</a>
+    </div>
+
+    <blockquote style="margin-top: 20px; margin-bottom: 20px;">This work is currently in progress. Please check back later for the final version.</blockquote>
+
+    <h1>Really Good Search is Really Hard.</h1>
+    <i>Written between October 12th and 14th, 2025, in San Francisco.</i>
+
+    <p style="margin-top: 20px;">
+        At <a href="https://opennote.com" class="project-link">Opennote</a>, we built a low-latency search engine that allows us to retrieve multi-tenant queries in milliseconds. 
+
+        In short, this is a setup with two layers, starting with a serverless set of bindings on <cite href="https://workers.cloudflare.com/">Workers</cite>, in front of a <cite href="https://github.com/pgvector/pgvector">pgvector</cite> configuration. In telling people that we decided on <i>postgres</i> instead of a dedicated vector database, it can raise a question. 
+
+        This blog post dives into an attempt to answer exactly that, which powers every single AI agent on Opennote.
+
+        <h3 style="margin-top: 20px;">Background</h3>
+        
+        A big media "trend" recently has been <cite href="https://www.meta.com/superintelligence/">Personal Superintelligence</cite>. The idea revolves around the fact that AI will change the way we interact with our daily lives, becoming a personal partner in every facet of what we do. Science fiction aside, this makes reasonable sense. There are plenty of companies attempting this today (see Interaction Co, Cluely, etc.). At Opennote, we make software that allows users to think differently, and learn differently. To do this, our AI systems need to know the user.
+
+        <br/><br/>
+
+        Imagine you've just stumbled upon Opennote for the first time. You're curious what is possible. You click on the <b>Google Drive Integration</b> in our onboarding steps, and instantly our systems are able to build you a summary of all your class notes, or highlight key concepts, or find that tax return you were missing, all within seconds.
+
+        <code language="python">
+search("What did I learn in math class last week?")
+> "You learned about the Pythagorean theorem and how to solve for the hypotenuse of a right triangle. Let's dive deeper into that."
+        </code>
+
+        This is that kind of magic moment that we're leading up to every time the user is on the platform. The goal is <i>proactively</i> understanding a user's intent, and providing them with the best results from what they've done before, platform-agnostic.
+
+        <br/><br/>
+
+        <i>But, there's a catch.</i> Opennote is a <cite href="https://en.wikipedia.org/wiki/multitenancy">multitenant</cite> and collaborative tool. This means that all of our search results have to be seperated in scope, and yet, support the capability to seach across tenants simulatenously. If a user is working with a team, they want results from both the team and user's knowledge. If a user is working between the web and their work, they want both results at the same time.
+
+        <br/><br/>
+
+        Lastly, our search isn't like code or a traditional setup like Google Search. We can't build a graph from text chunks, as paragraphs lack the consistent structure that code blocks have. Unlike, for example, <cite href="https://cursor.com/docs/context/codebase-indexing">Cursor's codebase indexing</cite>, writing is open-ended and highly variable. And finally, there's no way to rank results based on popularity, because the primary searcher is not the user, but rather an agent, that can search for many different things across many different contexts.
+
+        <h3 style="margin-top: 20px;">How does AI understand?</h3>
+        To understand how we can best structure a corpus for AI to understand, we need to understand how AI understands. Search agents don't search like human beings. Humans build a mental model of the place they search within rather than being <i>directional</i>. Humans know where to look, what to search for, and the limitations of a system and search space as they use it. <b>AI is not that smart.</b> Models rather <cite href="https://openai.com/index/introducing-deep-research/">calculate a <i>trajectory</i></cite>, searching for a variety of keywords and context to determine what the user is looking for. Models also have a tendency to hallucinate, get lost, or return results they may deem accurate as they have no mental model or memory of the corpus they are working within. This may work for less complex systems, or for corpora that have millions of documents where a difference of a few words is inconsequential. 
+        
+        <br/><br/>
+
+        For Opennote's search, however, we can't rely both on the user to have the right information, nor on the model to have the right memory or trajectory. We are required to build a system that can return the most accurate result (or set of results) regardless of the scale of the search. And lastly, we're building a consumer-facing application, so latency is a major factor. Unlike deep research tasks that have the liberty to take minutes, we only have milliseconds to make sure we get a result and proceed.
+        
+
+    </p>
+
+    <div class="references" id="references"></div>
+
+    <script>
+        // Citation system
+        document.addEventListener('DOMContentLoaded', function() {
+            const cites = document.querySelectorAll('cite[href]');
+            const citations = new Map();
+            let counter = 1;
+
+            // Process each citation
+            cites.forEach(cite => {
+                const url = cite.getAttribute('href');
+
+                if (!citations.has(url)) {
+                    citations.set(url, counter++);
+                }
+
+                const num = citations.get(url);
+                const link = document.createElement('a');
+                link.href = `#ref-${num}`;
+                link.className = 'project-link';
+                link.textContent = `[${num}]`;
+                cite.appendChild(link);
+            });
+
+            // Create references section if there are citations
+            if (citations.size > 0) {
+                const refsDiv = document.getElementById('references');
+                const heading = document.createElement('h2');
+                heading.textContent = 'References';
+                refsDiv.appendChild(heading);
+
+                const list = document.createElement('ol');
+                citations.forEach((num, url) => {
+                    const item = document.createElement('li');
+                    item.id = `ref-${num}`;
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.className = 'project-link';
+                    link.target = '_blank';
+                    link.textContent = url;
+                    item.appendChild(link);
+                    list.appendChild(item);
+                });
+                refsDiv.appendChild(list);
+            }
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('code[language]').forEach(function(block) {
+                const lang = block.getAttribute('language');
+                block.classList.add('language-' + lang);
+                Prism.highlightElement(block);
+            });
+        });
+    </script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\[', right: '\\]', display: true},
+                    {left: '\\(', right: '\\)', display: false}
+                ],
+                throwOnError: false
+            });
+        });
+    </script>
+</body>
+</html>
