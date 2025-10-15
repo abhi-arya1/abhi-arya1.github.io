@@ -129,6 +129,12 @@ blockquote {
     margin-bottom: 2px;
 }
 
+@media (min-width: 601px) and (max-width: 1024px) {
+    body {
+        padding: 10px 24px;
+    }
+}
+
 @media (max-width: 600px) {
     body {
         padding: 10px 24px;

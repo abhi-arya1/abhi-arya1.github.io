@@ -1,0 +1,7 @@
+{
+    "name": "abhi-arya1.github.io",
+    "publisher": "Abhigyan Arya",
+    "scripts": {
+        "dev": "echo 'Server running on http://localhost:8081' && python3 -m http.server 8081"
+    }
+}
