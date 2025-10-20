@@ -87,11 +87,9 @@
 
         In short, this is a setup with two layers, starting with a serverless set of bindings on <cite href="https://workers.cloudflare.com/">Workers</cite>, in front of a <cite href="https://github.com/pgvector/pgvector">pgvector</cite> configuration. In telling people that we decided on <i>postgres</i> instead of a dedicated vector database, it can raise a question. 
 
-        <br/><br/>
+        <br/>
 
-        This blog post dives into an attempt to answer exactly that, which powers every single AI agent on Opennote. But before I get started, there's one last thing. This post has a alternate title, in case the following below actually does apply: <b>"Really Good Search is Non-Trivial."</b>
-
-        <img src="/static/writing/search/hard-non-trivial.png" alt="Search" style="width: 40%; height: auto; justify-self: center; cursor: pointer;" onclick="window.open('https://x.com/nicochristie/status/1978196505392558087', '_blank')">
+        This blog post dives into an attempt to answer exactly that decision for the infrastructure powering the knowledge layer of Opennote.
 
         <h3 style="margin-top: 20px;">Background</h3>
         
@@ -157,7 +155,7 @@ search("What did I learn in math class last week?")
 
         Lastly, we follow pretty standard steps for indexing. All chunks are embedded and inserted into the database, which is distributed across partitions based on each entity. This helps our indexes be faster and filter our search across the relevant entities and partitions rather than the entire database.
 
-        Below is a schema of each "chunk" thats stored across our partitions, where I've commented out the improvements I made since the original version for comparison purposes.
+        <!-- Below is a schema of each "chunk" thats stored across our partitions, where I've commented out the improvements I made since the original version for comparison purposes.
 
         <code language="sql">
 CREATE TABLE public.chunks (
@@ -167,7 +165,7 @@ CREATE TABLE public.chunks (
   text_content text NOT NULL, -- for model context and full text search
   full_text_summary text, -- for model context only
   title text, -- for model context only
-  hash text NOT NULL,
+  hash text NOT NULL, -- for deduplication and content tracking
   chunk_index integer NOT NULL, -- for tracking only
   text_start_idx integer, -- for tracking only
   text_end_idx integer, -- for tracking only
@@ -181,7 +179,11 @@ CREATE TABLE public.chunks (
   -- text_length integer NOT NULL,
   CONSTRAINT chunks_pkey PRIMARY KEY (chunk_id, entity_id)
 );
-</code>
+    </code>
+
+    This schema is what drives our search function.  -->
+
+    <img src="/static/writing/search/eval.png" alt="Evaluation" style="width: 90%; height: auto; justify-self: center;">
     </p>
 
     <div class="footnotes" id="footnotes"></div>
