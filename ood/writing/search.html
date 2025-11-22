@@ -85,11 +85,11 @@
     <p style="margin-top: 20px;">
         At <a href="https://opennote.com" class="project-link">Opennote</a>, we built a low-latency search engine that allows us to retrieve multi-tenant queries in milliseconds.
 
-        In short, this is a setup with two layers, starting with a serverless set of bindings on <cite href="https://workers.cloudflare.com/">Workers</cite>, in front of a <cite href="https://github.com/pgvector/pgvector">pgvector</cite> configuration. In telling people that we decided on <i>postgres</i> instead of a dedicated vector database, it can raise a question. 
+        In short, this is a setup with two layers, starting with a serverless set of bindings on <cite href="https://workers.cloudflare.com/">Workers</cite>, in front of a <cite href="https://github.com/pgvector/pgvector">pgvector</cite> configuration. In telling people that we decided on <i>postgres</i> instead of a dedicated vector database, it can raise a question.
 
-        <br/>
+        <br/><br/>
 
-        This blog post dives into an attempt to answer exactly that decision for the infrastructure powering the knowledge layer of Opennote.
+        This blog post dives into the story behind this infrastructure, the process to design and develop it, and the reasoning behind our approach to build the knowledge layer that will provide insights to every layer of the platform.
 
         <h3 style="margin-top: 20px;">Background</h3>
         
@@ -116,21 +116,21 @@ search("What did I learn in math class last week?")
 
         <h3 style="margin-top: 20px;">How does AI understand?</h3>
 
-        To understand how we can best structure a corpus for AI to understand, we need to understand how AI understands. Search agents don't search like human beings. Humans build a mental model of the place they search within rather than being <i>directional</i>. Humans know where to look, what to search for, and the limitations of a system and search space as they use it. <i>AI is not that smart.</i> Models rather <cite href="https://openai.com/index/introducing-deep-research/">calculate a <i>trajectory</i></cite>, searching for a variety of keywords and context to determine what the user is looking for. Models also have a tendency to hallucinate, get lost, or return results they may deem accurate as they have no mental model or memory of the corpus they are working within. This may work for less complex systems, or for corpora that have millions of documents where a difference of a few words is inconsequential. 
+        To understand how we can best structure a corpus for AI to understand, we need to understand how AI understands. Search agents don't search like human beings. Humans build a mental model of the place they search within rather than being <i>directional</i>. Humans know where to look, what to search for, and the limitations of a system and search space as they use it. <i>AI is not that smart.</i> Models rather <cite href="https://openai.com/index/introducing-deep-research/">calculate a <i>trajectory</i></cite>, searching for a variety of keywords and context to determine what the user is looking for. Models also have a tendency to hallucinate, get lost, or return results they may deem accurate as they have no mental model or memory of the corpus they are working within. This may work for less complex systems, or for corpora that have millions of documents where a difference of a few words is inconsequential. (I don't have a direct citation for this, but the basis of this knowledge was from a talk at <cite href="https://trychroma.com">Chroma's</cite> Office in early October, 2025.)
         
         <br/><br/>
 
-        For Opennote's search, however, we can't rely both on the user to have the right information, nor on the model to have the right memory or trajectory. We are required to build a system that can return the most accurate result (or set of results) regardless of the scale of the search. And lastly, we're building a consumer-facing application, so latency is a major factor. Unlike deep research tasks that have the liberty to take minutes, we only have milliseconds to make sure we get a result and proceed. Somewhat a hard problem indeed. 
+        For Opennote's search, however, we can't rely both on the user to have the right information, nor on the model to have the right memory or trajectory. We are required to build a system that can return the most accurate result (or set of results) regardless of the scale of the search. And lastly, we're building a consumer-facing application, so latency is a major factor. Unlike deep research tasks that have the liberty to take minutes, we only have milliseconds to make sure we get a result and proceed. Here, we have the makings of an interesting problem.
 
-        <h3 style="margin-top: 20px;">Searching (<i>ba-dum-tss</i>) for a solution</h3>
+        <h3 style="margin-top: 20px;">Searching for a solution</h3>
 
-        So now, we've defined a problem. How does one go about solving it? This is where one might search for a product that just solves this problem immediately for us and call it a day. But this problem seemed so interesting to me that I started to dive into research. 
+        So now we've defined that initial problem. We need multi-tenant search, we need fast search, and we need accurate search. This is where one might look for a product that solves the problem immediately. However, this layout of constraints seemed so interesting to me that I started to dive into research.
         
         A traditional vector retrieval system is what many queries lead to. Most of these follow the same schema, of a user-defined <i>id, embedding, metadata</i>, and a search function that returns the top $k$ results. This is a great starting point and where we initially began with our existing search system. We had collections per user which allowed for seperation of scopes, with IDs linking back to documents alongside the text that was embedded. 
         
         <br/><br/>
 
-        This <i>worked</i>. However, it was the furthest thing from fast. Hybrid search required searching for $n$ documents semantically, then $m$ documents through a slower full-text or regex based search, and returning a reranked mix. Metadata filtering was not built as a end-all solution, and didn't offer the scale we needed. And the largest issue (beyond mentions of search speed being sometimes over 10 seconds) was absolutely no support for multi-tenant search.
+        This <i>worked</i>. However, it was the furthest thing from fast. Hybrid search required searching for $n$ documents semantically, then $m$ documents through a slower full-text or regex based search, and returning a reranked mix, due to no native support for hybrid retrieval. Metadata filtering was not built as a end-all solution, and didn't offer the scale we needed. And outside of some latency issues especially with large amounts of chunks per user, the largest issue was no native support for multi-tenant search, while remaning scalable. 
 
         <br/><br/>
 
@@ -140,7 +140,7 @@ search("What did I learn in math class last week?")
 
          <br/><br/>
 
-         The last question before I could dive into implementation was speed. Supabase seemed like a no-brainer for storage due to the full-featured Postgres capabilities, but what about for implementation? This is where taking a shot in the dark with <cite href="https://workers.cloudflare.com/">Workers</cite> paid off. By bringing the API and AI infrastructure right near a user, we were already at the stage of milliseconds required to search. With that, all the ingredients are gathered for "hopefully" good search.
+         The last question before I could dive into implementation was speed. Supabase initially seemed like a no-brainer for storage due to the full-featured Postgres capabilities, but what about for implementation? This is where taking a shot in the dark with <cite href="https://workers.cloudflare.com/">Workers</cite> paid off. By bringing the API and AI infrastructure right near a user, we were already at the stage of milliseconds required to search. With that, all the ingredients are gathered for "hopefully" good search.
 
 
         <h3 style="margin-top: 20px;">Prototyping -1 to 0</h3>
@@ -149,39 +149,22 @@ search("What did I learn in math class last week?")
 
         <br/><br/>
 
-        That document is then chunked recursively into sections. We chose this strategy as it provides the lightest weight option for our use case (prioritizing speed) while retaining a good amount of meaning, and being <cite href="https://research.trychroma.com/evaluating-chunking">somewhat standard for RAG applications.</cite> Once a document is chunked, we then generate a full text summary that highlights the main overview of the document. This step is not meant for the accuracy of search, but rather for the model once it recieves top results, to build a better picture for the final response.
+        That document is then chunked recursively into sections. We chose this strategy as it provides the lightest weight option for our use case (prioritizing speed) while retaining a good amount of meaning, and being <cite href="https://research.trychroma.com/evaluating-chunking">somewhat standard for RAG applications.</cite> Once a document is chunked, we then generate a full text summary that highlights the main overview of the document. This summary step is not meant for the accuracy of search, but rather for the model once it recieves top results, to build a better picture for the final response.
 
         <br/><br/>
 
         Lastly, we follow pretty standard steps for indexing. All chunks are embedded and inserted into the database, which is distributed across partitions based on each entity. This helps our indexes be faster and filter our search across the relevant entities and partitions rather than the entire database.
 
-        <!-- Below is a schema of each "chunk" thats stored across our partitions, where I've commented out the improvements I made since the original version for comparison purposes.
+        <br/><br/>
 
-        <code language="sql">
-CREATE TABLE public.chunks (
-  chunk_id uuid NOT NULL DEFAULT gen_random_uuid(),
-  entity_id text NOT NULL, -- for filtering
-  document_id text NOT NULL, -- for filtering
-  text_content text NOT NULL, -- for model context and full text search
-  full_text_summary text, -- for model context only
-  title text, -- for model context only
-  hash text NOT NULL, -- for deduplication and content tracking
-  chunk_index integer NOT NULL, -- for tracking only
-  text_start_idx integer, -- for tracking only
-  text_end_idx integer, -- for tracking only
-  embedding vector NOT NULL,
-  source text NOT NULL, -- for filtering
-  created_at timestamp with time zone NOT NULL DEFAULT now(),
-  updated_at timestamp with time zone NOT NULL DEFAULT now(),
-  tags ARRAY DEFAULT '{}'::text[], -- for filtering
-  fts_tokens tsvector DEFAULT ((setweight(to_tsvector('simple'::regconfig, COALESCE(text_content, ''::text)), 'A'::"char") || setweight(to_tsvector('simple'::regconfig, COALESCE(title, ''::text)), 'B'::"char")) || setweight(to_tsvector('simple'::regconfig, COALESCE(full_text_summary, ''::text)), 'C'::"char")),
-  -- language text DEFAULT 'simple'::text,
-  -- text_length integer NOT NULL,
-  CONSTRAINT chunks_pkey PRIMARY KEY (chunk_id, entity_id)
-);
-    </code>
+        Now came the fun part, the search function. We have the data laid out, and a way to load it, but how do we search for it?
 
-    This schema is what drives our search function.  -->
+        <h3 style="margin-top: 20px;">Evaluating Version 0.0.1</h3>
+
+        Great! We have indexed our documents, and we have 
+
+        
+
 
     <img src="/static/writing/search/eval.png" alt="Evaluation" style="width: 90%; height: auto; justify-self: center;">
     </p>
