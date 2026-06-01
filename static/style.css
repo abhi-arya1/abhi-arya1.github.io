@@ -169,6 +169,10 @@ img {
     margin-top: 2px;
 }
 
+.me-pic-mobile {
+    display: none;
+}
+
 blockquote {
     background-color: #f0efec;
     margin-bottom: 0;
@@ -218,7 +222,7 @@ blockquote {
 
     h1 {
         font-size: 1.4rem;
-        margin-top: 40px !important;
+        margin-top: 8px !important;
     }
 
     .links a {
@@ -239,12 +243,21 @@ blockquote {
     }
 
     .intro {
-        flex-direction: column-reverse;
+        flex-direction: column;
         gap: 12px;
     }
 
     .me-pic {
         width: 70px;
         height: 70px;
+    }
+
+    .intro .me-pic {
+        display: none;
+    }
+
+    .me-pic-mobile {
+        display: block;
+        margin-top: 40px;
     }
 }
