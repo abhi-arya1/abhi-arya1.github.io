@@ -180,13 +180,15 @@ blockquote {
     display: flex;
     gap: 8px;
     margin: 5px 0 40px 0;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .photo-container img {
     border-radius: 3px;
-    width: 170px;
-    height: auto;
+    height: 300px;
+    width: auto;
+    max-width: none;
+    flex-shrink: 0;
 }
 
 .github-snake {
@@ -225,15 +227,15 @@ blockquote {
     }
 
     .photo-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
         gap: 8px;
         overflow: visible;
+        justify-content: center;
     }
 
     .photo-container img {
-        width: 100%;
-        height: auto;
+        height: 200px;
+        width: auto;
     }
 
     .intro {
